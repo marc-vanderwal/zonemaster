@@ -38,6 +38,7 @@ should return a packet and which message tags the scenario should generate.
 | GOOD-CNAME-1             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
 | GOOD-CNAME-2             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
 | GOOD-CNAME-CHAIN         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
+| GOOD-CNAME-CHAIN-2       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
 | GOOD-CNAME-OUT-OF-ZONE   | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
 | NXDOMAIN-VIA-CNAME       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
 | NODATA-VIA-CNAME         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
@@ -96,6 +97,26 @@ The query name will resolve to one `A` record via three CNAMEs.
    good-cname-chain-two     CNAME good-cname-chain-three
    good-cname-chain-three   CNAME good-cname-chain-target
    good-cname-chain-target  A     127.0.0.1
+```
+
+### GOOD-CNAME-CHAIN-2
+
+The query name will resolve to one `A` record via a chain of CNAMEs, varying
+between lowercase and uppercase. The domain name in one CNAME’s RDATA is equal
+to another CNAME’s owner name but might have different case. This scenario
+exercises transitions from lowercase to uppercase, uppercase to uppercase and
+uppercase to lowercase. It also exercises a difference in case between the
+final CNAME’s target name and the target resource record’s owner name.
+
+* Query name: "good-cname-chain-2.cname.recursor.engine.xa"
+  * To be found in the answer section:
+
+```
+   good-cname-chain-2         CNAME good-cname-chain-2-two
+   GOOD-CNAME-CHAIN-2-TWO     CNAME GOOD-CNAME-CHAIN-2-THREE
+   GOOD-CNAME-CHAIN-2-THREE   CNAME GOOD-CNAME-CHAIN-2-FOUR
+   good-cname-chain-2-four    CNAME good-cname-chain-2-target
+   GOOD-CNAME-CHAIN-2-TARGET  A     127.0.0.1
 ```
 
 ### GOOD-CNAME-OUT-OF-ZONE

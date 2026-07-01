@@ -30,6 +30,15 @@ good-cname-chain-two          CNAME good-cname-chain-three
 good-cname-chain-three        CNAME good-cname-chain-target
 good-cname-chain-target       A     127.0.0.1
 
+; For scenario GOOD-CNAME-CHAIN-2
+; Served by a CoreDNS template to ensure everything is served with the exact
+; case.
+; good-cname-chain-2            CNAME good-cname-chain-2-two
+; GOOD-CNAME-CHAIN-2-TWO        CNAME GOOD-CNAME-CHAIN-2-THREE
+; GOOD-CNAME-CHAIN-2-THREE      CNAME GOOD-CNAME-CHAIN-2-FOUR
+; GOOD-CNAME-CHAIN-2-FOUR       CNAME good-cname-chain-2-target
+; GOOD-CNAME-CHAIN-2-TARGET     A     127.0.0.1
+
 ; For scenario GOOD-CNAME-OUT-OF-ZONE
 good-cname-out-of-zone        CNAME target.goodsub
 goodsub                       NS    ns1.goodsub

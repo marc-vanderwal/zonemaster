@@ -30,24 +30,27 @@ subzones are created. The names are given in section
 
 ## Test scenarios
 
-Scenario name                | Expected output
-:----------------------------|:---------------------------------------------------------------------------------------------
-GOOD-CNAME-1                 | True and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`
-GOOD-CNAME-2                 | True and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`
-GOOD-CNAME-CHAIN             | True and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`
-GOOD-CNAME-OUT-OF-ZONE       | True and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`
-NXDOMAIN-VIA-CNAME           | True and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`
-NODATA-VIA-CNAME             | True and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`
-MULT-CNAME                   | Undefined and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME`
-LOOPED-CNAME-IN-ZONE-1       | Undefined and tags `CNAME_START`, `CNAME_LOOP_INNER`
-LOOPED-CNAME-IN-ZONE-2       | Undefined and tags `CNAME_START`, `CNAME_LOOP_INNER`
-LOOPED-CNAME-IN-ZONE-3       | Undefined and tags `CNAME_START`, `CNAME_LOOP_INNER`
-LOOPED-CNAME-OUT-OF-ZONE     | Undefined and tags `CNAME_START`, `CNAME_LOOP_OUTER`
-TOO-LONG-CNAME-CHAIN         | Undefined and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`
-TARGET-NO-MATCH-CNAME        | Undefined and tags `CNAME_START`, `CNAME_NO_MATCH`
-BROKEN-CNAME-CHAIN           | Undefined and tags `CNAME_START`, `CNAME_RECORDS_CHAIN_BROKEN`
-WRONG-CNAME-OWNER-NAME       | False and no tags
-EXTRA-CNAME-IN-ANSWER        | False and no tags
+In the table below, the *Expected output* column states whether the scenario
+should return a packet and which message tags the scenario should generate.
+
+| Scenario name            | Expected output                                                |
+|:-------------------------|:---------------------------------------------------------------|
+| GOOD-CNAME-1             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
+| GOOD-CNAME-2             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
+| GOOD-CNAME-CHAIN         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
+| GOOD-CNAME-OUT-OF-ZONE   | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
+| NXDOMAIN-VIA-CNAME       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
+| NODATA-VIA-CNAME         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
+| MULT-CNAME               | No packet and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME`    |
+| LOOPED-CNAME-IN-ZONE-1   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-IN-ZONE-2   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-IN-ZONE-3   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-OUT-OF-ZONE | No packet and tags `CNAME_START`, `CNAME_LOOP_OUTER`           |
+| TOO-LONG-CNAME-CHAIN     | No packet and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`     |
+| TARGET-NO-MATCH-CNAME    | No packet and tags `CNAME_START`, `CNAME_NO_MATCH`             |
+| BROKEN-CNAME-CHAIN       | No packet and tags `CNAME_START`, `CNAME_RECORDS_CHAIN_BROKEN` |
+| WRONG-CNAME-OWNER-NAME   | No packet and no tags                                          |
+| EXTRA-CNAME-IN-ANSWER    | No packet and no tags                                          |
 
 ## Zone setup for test scenarios
 
@@ -68,12 +71,12 @@ The query name will resolve to one `A` record via one CNAME.
 * Query name: "good-cname-1.cname.recursor.engine.xa"
   * To be found in the answer section:
 ```
-   good-cname-1         CNAME good-cname-1-target 
+   good-cname-1         CNAME good-cname-1-target
    good-cname-1-target  A     127.0.0.1
 ```
 
 ### GOOD-CNAME-2
-The query name will resolve to two `A` record via one CNAME.
+The query name will resolve to two `A` records via one CNAME.
 
 * Query name: "good-cname-2.cname.recursor.engine.xa"
   * To be found in the answer section:
@@ -84,7 +87,7 @@ The query name will resolve to two `A` record via one CNAME.
 ```
 
 ### GOOD-CNAME-CHAIN
-The query name will resolve to two `A` record via three CNAME.
+The query name will resolve to one `A` record via three CNAMEs.
 
 * Query name: "good-cname-chain.cname.recursor.engine.xa"
   * To be found in the answer section:
@@ -166,7 +169,7 @@ The query name exists, but as CNAME, as two CNAME records.
    mult-cname-target-2   A     127.0.0.2
 ```
 
-## LOOPED-CNAME-IN-ZONE-1
+### LOOPED-CNAME-IN-ZONE-1
 The query name will point at a CNAME record with the same target as owner name.
 
 * Query name: "looped-cname-in-zone-1.cname.recursor.engine.xa"
@@ -175,9 +178,9 @@ The query name will point at a CNAME record with the same target as owner name.
    looped-cname-in-zone-1 CNAME looped-cname-in-zone-1
 ```
 
-## LOOPED-CNAME-IN-ZONE-2
+### LOOPED-CNAME-IN-ZONE-2
 The query name will point at a CNAME, which points at a second CNAME,
-which points to a third CNAME whose target name is the same as the 
+which points to a third CNAME whose target name is the same as the
 owner name of the second CNAME.
 
 * Query name: "looped-cname-in-zone-2.cname.recursor.engine.xa"
@@ -188,7 +191,7 @@ owner name of the second CNAME.
    looped-cname-in-zone-2-b  CNAME looped-cname-in-zone-2-a
 ```
 
-## LOOPED-CNAME-IN-ZONE-3
+### LOOPED-CNAME-IN-ZONE-3
 The query name will point at a CNAME, which points at a second CNAME whose target
 name is the same as the owner name of the first CNAME.
 
@@ -199,7 +202,7 @@ name is the same as the owner name of the first CNAME.
    looped-cname-in-zone-3-next  CNAME looped-cname-in-zone-3
 ```
 
-## LOOPED-CNAME-OUT-OF-ZONE
+### LOOPED-CNAME-OUT-OF-ZONE
 The query name will point at a CNAME record, but in a sub zone, and the target
 name of the CNAME record will point at another CNAME record in another sub zone,
 and the target name of the second CNAME record will point at the first.
@@ -317,4 +320,3 @@ besides the `A` record matching query name.
 [RCODE Name]:                                                     https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6
 [Test zone README file]:                                          ../../README.md
 [Zone setup for test scenarios]:                                  #zone-setup-for-test-scenarios
-

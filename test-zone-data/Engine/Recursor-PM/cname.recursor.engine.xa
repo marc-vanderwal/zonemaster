@@ -116,5 +116,12 @@ wrong-cname-owner-name-target  A     127.0.0.1
 
 ; For scenario EXTRA-CNAME-IN-ANSWER
 ; Also defined in the cfg file
-extra-cname-in-answer         A     127.0.0.1
-extra-cname-in-answer-1       CNAME extra-cname-in-answer-2
+; extra-cname-in-answer         A     127.0.0.1
+; extra-cname-in-answer-extra   CNAME extra-cname-in-answer-extra-2
+
+; For scenario EXTRA-CNAME-IN-ANSWER-2
+; Also defined in the cfg file
+extra-cname-in-answer-2       CNAME extra-cname-in-answer-2-t
+extra-cname-in-answer-2-t     A     127.0.0.1
+; The following is also served by CoreDNS (see configuration file):
+; extra-cname-in-answer-2-u   CNAME extra-cname-in-answer-2-v

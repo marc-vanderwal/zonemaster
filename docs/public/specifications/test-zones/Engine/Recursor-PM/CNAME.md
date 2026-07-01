@@ -52,6 +52,7 @@ should return a packet and which message tags the scenario should generate.
 | BROKEN-CNAME-CHAIN       | No packet and tags `CNAME_START`, `CNAME_RECORDS_CHAIN_BROKEN` |
 | WRONG-CNAME-OWNER-NAME   | No packet and no tags                                          |
 | EXTRA-CNAME-IN-ANSWER    | No packet and no tags                                          |
+| EXTRA-CNAME-IN-ANSWER-2  | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
 
 ## Zone setup for test scenarios
 
@@ -333,9 +334,23 @@ besides the `A` record matching query name.
   * To be found in the answer section:
 ```
    extra-cname-in-answer         A     127.0.0.1
-   extra-cname-in-answer-1       CNAME extra-cname-in-answer-2
+   extra-cname-in-answer-extra   CNAME extra-cname-in-answer-extra-2
 ```
 
+### EXTRA-CNAME-IN-ANSWER-2
+
+There is a CNAME record at the query name which points to another name, which
+itselfs resolves to an A record, thus forming a complete chain. In addition,
+there is an unrelated CNAME record at an unrelated owner name also pointing to
+an unrelated target name.
+
+* Query name: "extra-cname-in-answer-2.cname.recursor.engine.xa"
+  * To be found in the answer section:
+```
+extra-cname-in-answer-2       CNAME extra-cname-in-answer-2-t
+extra-cname-in-answer-2-t     A     127.0.0.1
+extra-cname-in-answer-2-u     CNAME extra-cname-in-answer-2-v
+```
 
 
 [RCODE Name]:                                                     https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml#dns-parameters-6

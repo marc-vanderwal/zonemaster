@@ -30,29 +30,30 @@ subzones are created. The names are given in section
 
 ## Test scenarios
 
-In the table below, the *Expected output* column states whether the scenario
-should return a packet and which message tags the scenario should generate.
+In the table below, the *Expected output* column states which RCODE should
+appear in the response packet and which message tags the scenario should
+generate.
 
-| Scenario name            | Expected output                                             |
-|:-------------------------|:------------------------------------------------------------|
-| GOOD-CNAME-1             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
-| GOOD-CNAME-2             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
-| GOOD-CNAME-CHAIN         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
-| GOOD-CNAME-CHAIN-2       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
-| GOOD-CNAME-OUT-OF-ZONE   | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
-| NXDOMAIN-VIA-CNAME       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
-| NODATA-VIA-CNAME         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
-| MULT-CNAME               | No packet and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME` |
-| LOOPED-CNAME-IN-ZONE-1   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
-| LOOPED-CNAME-IN-ZONE-2   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
-| LOOPED-CNAME-IN-ZONE-3   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
-| LOOPED-CNAME-OUT-OF-ZONE | No packet and tags `CNAME_START`, `CNAME_LOOP_OUTER`        |
-| TOO-LONG-CNAME-CHAIN     | No packet and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`  |
-| TARGET-NO-MATCH-CNAME    | No packet and tags `CNAME_START`, `CNAME_NO_MATCH`          |
-| BROKEN-CNAME-CHAIN       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
-| WRONG-CNAME-OWNER-NAME   | No packet and no tags                                       |
-| EXTRA-CNAME-IN-ANSWER    | No packet and no tags                                       |
-| EXTRA-CNAME-IN-ANSWER-2  | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| Scenario name            | Expected output                                               |
+|:-------------------------|:--------------------------------------------------------------|
+| GOOD-CNAME-1             | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`      |
+| GOOD-CNAME-2             | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`      |
+| GOOD-CNAME-CHAIN         | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`      |
+| GOOD-CNAME-CHAIN-2       | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`      |
+| GOOD-CNAME-OUT-OF-ZONE   | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`  |
+| NXDOMAIN-VIA-CNAME       | NXDOMAIN and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
+| NODATA-VIA-CNAME         | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`  |
+| MULT-CNAME               | SERVFAIL and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME`    |
+| LOOPED-CNAME-IN-ZONE-1   | SERVFAIL and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-IN-ZONE-2   | SERVFAIL and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-IN-ZONE-3   | SERVFAIL and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
+| LOOPED-CNAME-OUT-OF-ZONE | SERVFAIL and tags `CNAME_START`, `CNAME_LOOP_OUTER`           |
+| TOO-LONG-CNAME-CHAIN     | SERVFAIL and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`     |
+| TARGET-NO-MATCH-CNAME    | NXDOMAIN and tags `CNAME_START`, `CNAME_NO_MATCH`             |
+| BROKEN-CNAME-CHAIN       | NXDOMAIN and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| WRONG-CNAME-OWNER-NAME   | NOERROR and no tags                                           |
+| EXTRA-CNAME-IN-ANSWER    | NOERROR and no tags                                           |
+| EXTRA-CNAME-IN-ANSWER-2  | NOERROR and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`      |
 
 ## Zone setup for test scenarios
 
@@ -303,6 +304,9 @@ The CNAME target name does not match the owner name of the `A` record.
    target-no-match-cname-target  A      127.0.0.1
 ```
 
+* Query name: "target-no-match-cname-two.cname.recursor.engine.xa"
+  * Gives NXDOMAIN
+
 ### BROKEN-CNAME-CHAIN
 The CNAME chain is broken between first and second CNAME records.
 
@@ -314,6 +318,8 @@ The CNAME chain is broken between first and second CNAME records.
    broken-cname-chain-target     A     127.0.0.1
 ```
 
+* Query name: "broken-cname-chain-two.cname.recursor.engine.xa"
+  * Gives NXDOMAIN
 
 ### WRONG-CNAME-OWNER-NAME
 The owner name of the CNAME in the response does not match query name.

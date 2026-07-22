@@ -33,26 +33,26 @@ subzones are created. The names are given in section
 In the table below, the *Expected output* column states whether the scenario
 should return a packet and which message tags the scenario should generate.
 
-| Scenario name            | Expected output                                                |
-|:-------------------------|:---------------------------------------------------------------|
-| GOOD-CNAME-1             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
-| GOOD-CNAME-2             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
-| GOOD-CNAME-CHAIN         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
-| GOOD-CNAME-CHAIN-2       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
-| GOOD-CNAME-OUT-OF-ZONE   | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
-| NXDOMAIN-VIA-CNAME       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
-| NODATA-VIA-CNAME         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE`    |
-| MULT-CNAME               | No packet and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME`    |
-| LOOPED-CNAME-IN-ZONE-1   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
-| LOOPED-CNAME-IN-ZONE-2   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
-| LOOPED-CNAME-IN-ZONE-3   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`           |
-| LOOPED-CNAME-OUT-OF-ZONE | No packet and tags `CNAME_START`, `CNAME_LOOP_OUTER`           |
-| TOO-LONG-CNAME-CHAIN     | No packet and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`     |
-| TARGET-NO-MATCH-CNAME    | No packet and tags `CNAME_START`, `CNAME_NO_MATCH`             |
-| BROKEN-CNAME-CHAIN       | No packet and tags `CNAME_START`, `CNAME_RECORDS_CHAIN_BROKEN` |
-| WRONG-CNAME-OWNER-NAME   | No packet and no tags                                          |
-| EXTRA-CNAME-IN-ANSWER    | No packet and no tags                                          |
-| EXTRA-CNAME-IN-ANSWER-2  | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`        |
+| Scenario name            | Expected output                                             |
+|:-------------------------|:------------------------------------------------------------|
+| GOOD-CNAME-1             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| GOOD-CNAME-2             | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| GOOD-CNAME-CHAIN         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| GOOD-CNAME-CHAIN-2       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| GOOD-CNAME-OUT-OF-ZONE   | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
+| NXDOMAIN-VIA-CNAME       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
+| NODATA-VIA-CNAME         | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_OUT_OF_ZONE` |
+| MULT-CNAME               | No packet and tags `CNAME_START`, `CNAME_MULTIPLE_FOR_NAME` |
+| LOOPED-CNAME-IN-ZONE-1   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
+| LOOPED-CNAME-IN-ZONE-2   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
+| LOOPED-CNAME-IN-ZONE-3   | No packet and tags `CNAME_START`, `CNAME_LOOP_INNER`        |
+| LOOPED-CNAME-OUT-OF-ZONE | No packet and tags `CNAME_START`, `CNAME_LOOP_OUTER`        |
+| TOO-LONG-CNAME-CHAIN     | No packet and tags `CNAME_START`, `CNAME_RECORDS_TOO_MANY`  |
+| TARGET-NO-MATCH-CNAME    | No packet and tags `CNAME_START`, `CNAME_NO_MATCH`          |
+| BROKEN-CNAME-CHAIN       | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
+| WRONG-CNAME-OWNER-NAME   | No packet and no tags                                       |
+| EXTRA-CNAME-IN-ANSWER    | No packet and no tags                                       |
+| EXTRA-CNAME-IN-ANSWER-2  | Packet and tags `CNAME_START`, `CNAME_FOLLOWED_IN_ZONE`     |
 
 ## Zone setup for test scenarios
 
